@@ -15,8 +15,8 @@ const publicKey = new PublicKey(newPair._keypair.publicKey).toString();
 const privateKey = newPair._keypair.secretKey;
 
 // take Arg UserPubkey from Command line 
-const ArgUserPubKey = process.argv.slice(2)[0];
-console.log("ToUserPubKey: ", ArgUserPubKey);
+const ArgUserPubkey = process.argv.slice(2)[0];
+console.log("ToUserPubKey: ", ArgUserPubkey);
 
 
 // Connect to the Devnet
@@ -32,9 +32,9 @@ const getWalletBalance = async () => {
         console.log("Connection object is:", connection);
 
         // Make a wallet (keypair) from privateKey and get its balance
-        const myWallet = await Keypair.fromSecretKey(privateKey);
+        //const myWallet = await Keypair.fromSecretKey(privateKey);
         const walletBalance = await connection.getBalance(
-            new PublicKey(newPair.publicKey)
+            new PublicKey(ArgUserPubkey)
         );
         console.log(`Wallet balance: ${parseInt(walletBalance) / LAMPORTS_PER_SOL} SOL`);
     } catch (err) {
@@ -46,12 +46,12 @@ const airDropSol = async () => {
     try {
         // Connect to the Devnet and make a wallet from privateKey
         const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
-        const myWallet = await Keypair.fromSecretKey(privateKey);
+        // const myWallet = await Keypair.fromSecretKey(privateKey);
 
         // Request airdrop of 2 SOL to the wallet
         console.log("Airdropping some SOL to my wallet!");
         const fromAirDropSignature = await connection.requestAirdrop(
-          //  new PublicKey(myWallet.publicKey),
+            //  new PublicKey(myWallet.publicKey),
             new PublicKey(ArgUserPubKey),
             2 * LAMPORTS_PER_SOL
         );
